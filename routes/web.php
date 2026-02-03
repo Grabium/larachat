@@ -17,4 +17,9 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
+Route::middleware(['auth', 'verified'])->group(function () {
+    Route::get('/dashboard', function () {return view('dashboard');})->name('dashboard');
+    Route::get('/chat', App\Livewire\Pages\Chat::class)->name('pages.chat');
+});
+
 require __DIR__.'/auth.php';
