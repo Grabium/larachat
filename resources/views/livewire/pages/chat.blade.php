@@ -138,13 +138,24 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-lg-12">
-                            <div class="chat-message-form">
-                                <div class="form-group">
-                                    <textarea class="form-control message-input" name="message" placeholder="Enter message text and press enter"></textarea>
+                        <form wire:submit.prevent="sendMessage">
+                            <div class="col-lg-12">
+                                <div class="chat-message-form">
+                                    <div class="form-group">
+                                        <textarea 
+                                            wire:model="message"
+                                            class="form-control message-input" 
+                                            name="message" 
+                                            placeholder="Enter message text and press enter">
+                                        </textarea>
+                                    </div>
+                                    <br>
+                                    <div class="form-group">
+                                        <button type="submit" class="btn btn-primary">Send</button>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
+                        </form>
                     </div>
                 </div>
             </div>
