@@ -79,60 +79,16 @@
                         </div>
                         <div class="col-md-3">
                             <div class="chat-users">
-
-
                                 <div class="users-list">
-                                    <div class="chat-user">
-                                        <img class="chat-avatar" src="https://bootdey.com/img/Content/avatar/avatar1.png" alt="">
-                                        <div class="chat-user-name">
-                                            <a href="#">Karl Jordan</a>
+                                    @foreach ($users as $user)
+                                        <div class="chat-user">
+                                            <span id="user-status-{{ $user->id }}" class="pull-right label label-primary">{{ $user->last_seen ? 'Online' : 'Offline' }}</span>
+                                            <img class="chat-avatar" src="{{ 'assets/img/default-avatar.jpg' }}" alt="">
+                                            <div class="chat-user-name">
+                                                <a href="#">{{ $user->name }}</a>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="chat-user">
-                                        <img class="chat-avatar" src="https://bootdey.com/img/Content/avatar/avatar2.png" alt="">
-                                        <div class="chat-user-name">
-                                            <a href="#">Monica Smith</a>
-                                        </div>
-                                    </div>
-                                    <div class="chat-user">
-                                        <span class="pull-right label label-primary">Online</span>
-                                        <img class="chat-avatar" src="https://bootdey.com/img/Content/avatar/avatar3.png" alt="">
-                                        <div class="chat-user-name">
-                                            <a href="#">Michael Smith</a>
-                                        </div>
-                                    </div>
-                                    <div class="chat-user">
-                                        <span class="pull-right label label-primary">Online</span>
-                                        <img class="chat-avatar" src="https://bootdey.com/img/Content/avatar/avatar4.png" alt="">
-                                        <div class="chat-user-name">
-                                            <a href="#">Janet Smith</a>
-                                        </div>
-                                    </div>
-                                    <div class="chat-user">
-                                        <img class="chat-avatar" src="https://bootdey.com/img/Content/avatar/avatar5.png" alt="">
-                                        <div class="chat-user-name">
-                                            <a href="#">Alice Smith</a>
-                                        </div>
-                                    </div>
-                                    <div class="chat-user">
-                                        <img class="chat-avatar" src="https://bootdey.com/img/Content/avatar/avatar6.png" alt="">
-                                        <div class="chat-user-name">
-                                            <a href="#">Monica Cale</a>
-                                        </div>
-                                    </div>
-                                    <div class="chat-user">
-                                        <img class="chat-avatar" src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="">
-                                        <div class="chat-user-name">
-                                            <a href="#">Mark Jordan</a>
-                                        </div>
-                                    </div>
-                                    <div class="chat-user">
-                                        <span class="pull-right label label-primary">Online</span>
-                                        <img class="chat-avatar" src="https://bootdey.com/img/Content/avatar/avatar8.png" alt="">
-                                        <div class="chat-user-name">
-                                            <a href="#">Janet Smith</a>
-                                        </div>
-                                    </div>
+                                    @endforeach
                                 </div>
                             </div>
                         </div>
