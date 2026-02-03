@@ -39,6 +39,7 @@ class RegisteredUserController extends Controller
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
+            'channel' => (new \App\Services\Supports\HashChannelGenerator())->generateChannelHash(),
         ]);
 
         event(new Registered($user));
