@@ -82,10 +82,21 @@
                                 <div class="users-list">
                                     @foreach ($users as $user)
                                         <div class="chat-user">
-                                            <span id="user-status-{{ $user->id }}" class="pull-right label label-primary">{{ $user->last_seen ? 'Online' : 'Offline' }}</span>
-                                            <img class="chat-avatar" src="{{ 'assets/img/default-avatar.jpg' }}" alt="">
+                                            
+                                            <span 
+                                                id="user-status-{{ $user->id }}" 
+                                                class="pull-right label label-primary"
+                                            >{{ $user->last_seen ? 'Online' : 'Offline' }}</span>
+                                            
+                                            <a wire:click="setTalk({{ $user->id }})" href="#">
+                                                <img class="chat-avatar" 
+                                                    src="{{ 'assets/img/default-avatar.jpg' }}" 
+                                                    alt="Image and link to {{ $user->name }}'s profile"
+                                                >
+                                            </a>
+                                            
                                             <div class="chat-user-name">
-                                                <a href="#">{{ $user->name }}</a>
+                                                <a wire:click="setTalk({{ $user->id }})" href="#">{{ $user->name }}</a>
                                             </div>
                                         </div>
                                     @endforeach
