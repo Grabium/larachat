@@ -5,11 +5,18 @@ namespace App\Livewire\Pages;
 use App\Services\UserService;
 use App\Services\TalkService;
 use Livewire\Component;
+use \Illuminate\Database\Eloquent\Collection;
+use App\Models\Talk;
+use App\Models\User;
 
 class Chat extends Component
 {
-    public string $message = '';
-    public \Illuminate\Database\Eloquent\Collection $users;
+    public     string $highlightMessage;
+    public     string $message = '';
+    public Collection $messages;
+    public Collection $users;
+    public  null|User $guestUser = null;
+    public       Talk $talk;
 
     public function render()
     {
@@ -18,18 +25,47 @@ class Chat extends Component
 
     public function mount()
     {
-        $this->users = app(UserService::class)->getOthrerUsers();
+        $this->setTalk(null, null);
     }
 
     public function sendMessage()
     {
-        dd($this->message);
+        if(is_null($this->guestUser) ){
+            $this->highlightMessage = 'Você precisa selecionar um usuário para conversar';
+            return;
+        }
+
+        if(empty($this->message) ){
+            $this->highlightMessage = 'Mensagem vazia';
+            return;
+        }
+
+        app(\App\Services\MessageService::class)->createMessageAndNotifyUser(
+            sender_user_id: auth()->id(),
+            talk_id: $this->talk->id,
+            content: $this->message
+        );
+
+        $this->message = '';
+        $this->setTalk(guestUserId: $this->guestUser->id);
     }
 
-    public function setTalk(int $guestUserId)
-    {
-        $talk = app(TalkService::class)->findOrCreateTalk(creatorUserId: auth()->id(), guestUserId: $guestUserId);
-        dd($talk);
+    public function setTalk(int|null $guestUserId)
+    {   
+        $this->users = app(UserService::class)->getOthrerUsers();
+
+        if(is_null($guestUserId)){
+            $this->highlightMessage = 'Click em algum usuário para iniciar o chat';
+            $guestUserId = auth()->id();
+        }else{
+            $this->guestUser = $this->users->where('id', $guestUserId)->first();
+            $this->highlightMessage = 'Conversando com ' . $this->guestUser->name;
+            $guestUserId = $this->guestUser->id;
+        }
+        
+     
+        $this->talk = app(TalkService::class)->findOrCreateTalk(creatorUserId: auth()->id(), guestUserId: $guestUserId);
+        $this->messages = app(\App\Services\MessageService::class)->getAllMessagesOfTalk(talkId: $this->talk->id);
     }
 
 

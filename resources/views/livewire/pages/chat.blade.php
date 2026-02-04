@@ -14,68 +14,23 @@
         <div class="col-lg-12">
             <div class="ibox chat-view">
                 <div class="ibox-title">
-                    <small class="pull-right text-muted">Last message:  Mon Jan 26 2015 - 18:39:23</small> Chat room panel
+                    {{$highlightMessage}}
                 </div>
                 <div class="ibox-content">
                     <div class="row">
                         <div class="col-md-9 ">
                             <div class="chat-discussion">
-
-                                <div class="chat-message left">
-                                    <img class="message-avatar" src="https://bootdey.com/img/Content/avatar/avatar1.png" alt="">
-                                    <div class="message">
-                                        <a class="message-author" href="#"> Michael Smith </a>
-                                        <span class="message-date"> Mon Jan 26 2015 - 18:39:23 </span>
-                                        <span class="message-content">
-    										Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.
-                                            </span>
+                                @foreach ($messages as $message)
+                                    <div class="chat-message {{ $message->sender_user_id == auth()->id() ? 'right' : 'left' }}">
+                                        <img class="message-avatar" src="{{ 'assets/img/default-avatar.jpg' }}" alt="">
+                                        <div class="message">
+                                            <a class="message-author" href="#"> {{ $message->sender_name }} </a>
+                                            <span class="message-date"> {{ formatDate($message->created_at) }} </span>
+                                            <span class="message-content">{{ $message->content }}</span>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="chat-message right">
-                                    <img class="message-avatar" src="https://bootdey.com/img/Content/avatar/avatar6.png" alt="">
-                                    <div class="message">
-                                        <a class="message-author" href="#"> Karl Jordan </a>
-                                        <span class="message-date">  Fri Jan 25 2015 - 11:12:36 </span>
-                                        <span class="message-content">
-											Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover.
-                                            </span>
-                                    </div>
-                                </div>
-                                <div class="chat-message right">
-                                    <img class="message-avatar" src="https://bootdey.com/img/Content/avatar/avatar6.png" alt="">
-                                    <div class="message">
-                                        <a class="message-author" href="#"> Michael Smith </a>
-                                        <span class="message-date">  Fri Jan 25 2015 - 11:12:36 </span>
-                                        <span class="message-content">
-											There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration.
-                                            </span>
-                                    </div>
-                                </div>
-                                <div class="chat-message left">
-                                    <img class="message-avatar" src="https://bootdey.com/img/Content/avatar/avatar1.png" alt="">
-                                    <div class="message">
-                                        <a class="message-author" href="#"> Alice Jordan </a>
-                                        <span class="message-date">  Fri Jan 25 2015 - 11:12:36 </span>
-                                        <span class="message-content">
-											All the Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary, making this the first true generator on the Internet.
-                                                It uses a dictionary of over 200 Latin words.
-                                            </span>
-                                    </div>
-                                </div>
-                                <div class="chat-message right">
-                                    <img class="message-avatar" src="https://bootdey.com/img/Content/avatar/avatar6.png" alt="">
-                                    <div class="message">
-                                        <a class="message-author" href="#"> Mark Smith </a>
-                                        <span class="message-date">  Fri Jan 25 2015 - 11:12:36 </span>
-                                        <span class="message-content">
-											All the Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary, making this the first true generator on the Internet.
-                                                It uses a dictionary of over 200 Latin words.
-                                            </span>
-                                    </div>
-                                </div>
-
+                                @endforeach
                             </div>
-
                         </div>
                         <div class="col-md-3">
                             <div class="chat-users">

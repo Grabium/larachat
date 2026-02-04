@@ -6,7 +6,7 @@ use App\Models\Talk;
 
 class TalkService
 {
-    public function findOrCreateTalk(int $creatorUserId, int $guestUserId)
+    public function findOrCreateTalk(int $creatorUserId, int $guestUserId): Talk
     {
         $minor_major_user_ids = min($creatorUserId, $guestUserId).'-'.max($creatorUserId, $guestUserId);
         
