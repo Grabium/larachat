@@ -11,12 +11,12 @@ use App\Models\User;
 
 class Chat extends Component
 {
-    public     string $highlightMessage;
-    public     string $message = '';
-    public Collection $messages;
-    public Collection $users;
-    public  null|User $guestUser = null;
-    public       Talk $talk;
+    public string $highlightMessage = '';
+    public string $newMessage = '';
+    public $messages; //  Collection. type-hiting de Collection no Livewire gera erro.
+    public $users;    // Collection. type-hiting de Collection no Livewire gera erro.
+    public ?User $guestUser = null;
+    public ?Talk $talk = null;
 
     public function render()
     {
@@ -25,6 +25,8 @@ class Chat extends Component
 
     public function mount()
     {
+        $this->messages = collect();
+        $this->users = collect();
         $this->setTalk(null, null);
     }
 
@@ -35,7 +37,7 @@ class Chat extends Component
             return;
         }
 
-        if(empty($this->message) ){
+        if(empty(trim($this->newMessage)) ){
             $this->highlightMessage = 'Mensagem vazia';
             return;
         }
@@ -43,10 +45,10 @@ class Chat extends Component
         app(\App\Services\MessageService::class)->createMessageAndNotifyUser(
             sender_user_id: auth()->id(),
             talk_id: $this->talk->id,
-            content: $this->message
+            content: $this->newMessage
         );
 
-        $this->message = '';
+        $this->reset('newMessage');
         $this->setTalk(guestUserId: $this->guestUser->id);
     }
 

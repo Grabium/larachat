@@ -65,10 +65,10 @@
                                 <div class="chat-message-form">
                                     <div class="form-group">
                                         <textarea 
-                                            wire:model="message"
+                                            type="text"
+                                            wire:model="newMessage"
                                             class="form-control message-input" 
-                                            name="message" 
-                                            placeholder="Enter message text and press enter">
+                                            placeholder="Enter message text and press enter" >
                                         </textarea>
                                     </div>
                                     <br>
